@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - GK with Shakti</title>
+  <style>
+    body {
+      background: #f5e9ff;
+      color: #30005a;
+      text-align: center;
+      font-family: "Noto Sans Bengali", sans-serif;
+    }
+    h1 { background: purple; color: white; padding: 10px; }
+    input, textarea {
+      width: 80%; padding: 10px; margin: 8px;
+      border: 1px solid #aaa; border-radius: 8px;
+    }
+    button {
+      background: purple; color: white;
+      padding: 10px 20px; border: none; border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Admin Panel - GK with Shakti</h1>
+
+  <h3>নতুন প্রশ্ন যোগ করো</h3>
+  <input type="text" id="question" placeholder="প্রশ্ন লিখুন"><br>
+  <input type="text" id="opt1" placeholder="অপশন ১"><br>
+  <input type="text" id="opt2" placeholder="অপশন ২"><br>
+  <input type="text" id="opt3" placeholder="অপশন ৩"><br>
+  <input type="text" id="opt4" placeholder="অপশন ৪"><br>
+  <input type="text" id="answer" placeholder="সঠিক উত্তর"><br>
+  <button onclick="addQuestion()">প্রশ্ন যোগ করো</button>
+
+  <script>
+    async function addQuestion() {
+      const q = {
+        question: document.getElementById('question').value,
+        options: [
+          document.getElementById('opt1').value,
+          document.getElementById('opt2').value,
+          document.getElementById('opt3').value,
+          document.getElementById('opt4').value
+        ],
+        answer: document.getElementById('answer').value
+      };
+      const res = await fetch('/api/add-question', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(q)
+      });
+      const data = await res.json();
+      alert(data.message);
+      document.getElementById("addQuestionForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const q = document.getElementById("questionText").value;
+  const a = document.getElementById("answerText").value;
+  alert(`নতুন প্রশ্ন যোগ করা হয়েছে:\nপ্রশ্ন: ${q}\nউত্তর: ${a}`);
+});
+
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GK with Shakti</title>
+  <style>
+    body {
+      font-family: "Noto Sans Bengali", sans-serif;
+      background: #f3e9ff;
+      color: #2e004f;
+      margin: 0;
+      text-align: center;
+    }
+    header {
+      background: purple;
+      color: white;
+      padding: 15px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    section {
+      margin: 30px auto;
+      width: 90%;
+      max-width: 700px;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    button {
+      background: purple;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover { background: #4a0072; }
+    .question { font-weight: bold; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <header>GK with Shakti</header>
+
+  <section id="home">
+    <h2>স্বাগতম!</h2>
+    <p>এই ওয়েবসাইটে প্রতি শুক্রবার একটি GK পরীক্ষা অনুষ্ঠিত হবে। এখন নিচে ২০০টি সাম্প্রতিক সাধারণ জ্ঞান প্রশ্ন দেখো।</p>
+  </section>
+
+  <section id="questions">
+    <h3>📘 ২০০টি সাম্প্রতিক সাধারণ জ্ঞান</h3>
+    <div id="questionList"></div>
+  </section>
+
+  <section id="exam">
+    <h3>🕒 সাপ্তাহিক পরীক্ষা</h3>
+    <button onclick="startExam()">পরীক্ষা শুরু করো</button>
+    <div id="examArea"></div>
+  </section>
+
+  <section id="login">
+    <h3>🔐 লগইন / রেজিস্ট্রেশন</h3>
+    <input type="text" id="username" placeholder="ইউজারনেম"><br><br>
+    <input type="password" id="password" placeholder="পাসওয়ার্ড"><br><br>
+    <button onclick="register()">রেজিস্টার</button>
+    <button onclick="login()">লগইন</button>
+  </section>
+
+  <script>
+    async function loadQuestions() {
+      const res = await fetch('/api/questions');
+      const data = await res.json();
+      const list = document.getElementById('questionList');
+      data.slice(0, 200).forEach(q => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+          <p class="question">${q.question}</p>
+          <p>উত্তর: ${q.answer}</p>
+          <hr>`;
+        list.appendChild(div);
+      });
+    }
+    loadQuestions();
+
+    function startExam() {
+      document.getElementById('examArea').innerHTML = "📝 পরীক্ষার সিস্টেম প্রস্তুত হচ্ছে... (Admin পরে প্রশ্ন যোগ করবে)";
+    }
+
+    function register() {
+      alert("রেজিস্ট্রেশন সম্পন্ন হয়েছে!");
+    }
+
+    function login() {
+      alert("লগইন সফল!");
+    }
+  </script>
+</body>
+</html>
